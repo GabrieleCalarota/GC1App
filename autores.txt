@@ -1,0 +1,6 @@
+Gabriele Calarota
+
+Elementos opcionales hecho:
+
+	- Auto update con el tiempo
+	- Foto (Tecla '3' para actualizar la foto de la escena)

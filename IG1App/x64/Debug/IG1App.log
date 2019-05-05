@@ -1,0 +1,38 @@
+﻿  Camera.cpp
+  Entity.cpp
+  main.cpp
+  Mesh.cpp
+e:\visualstudio\gabrielecalarota_progetto1\ig1app\mesh.cpp(84): warning C4018: '<': errata corrispondenza tra signed e unsigned
+e:\visualstudio\gabrielecalarota_progetto1\ig1app\mesh.cpp(110): warning C4018: '<': errata corrispondenza tra signed e unsigned
+e:\visualstudio\gabrielecalarota_progetto1\ig1app\mesh.cpp(200): warning C4244: '=': conversione da 'GLdouble' a 'GLuint'. Possibile perdita di dati.
+e:\visualstudio\gabrielecalarota_progetto1\ig1app\mesh.cpp(210): warning C4018: '<': errata corrispondenza tra signed e unsigned
+e:\visualstudio\gabrielecalarota_progetto1\ig1app\mesh.cpp(247): warning C4018: '<': errata corrispondenza tra signed e unsigned
+e:\visualstudio\gabrielecalarota_progetto1\ig1app\mesh.cpp(294): warning C4018: '<': errata corrispondenza tra signed e unsigned
+  Pixmap32RGBA.cpp
+  Scene.cpp
+  Texture.cpp
+e:\visualstudio\gabrielecalarota_progetto1\ig1app\texture.cpp(41): warning C4244: 'argomento': conversione da 'double' a 'GLsizei'. Possibile perdita di dati.
+  Viewport.cpp
+  Generazione del codice in corso...
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutInitWindowSize non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutInitDisplayMode non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutMainLoop non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutDestroyWindow non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutPostRedisplay non risolto nella funzione "void __cdecl key(unsigned char,int,int)" (?key@@YAXEHH@Z)
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutSwapBuffers non risolto nella funzione "void __cdecl display(void)" (?display@@YAXXZ)
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutIdleFunc non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutKeyboardFunc non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutSpecialFunc non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutReshapeFunc non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutDisplayFunc non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutGet non risolto nella funzione "void __cdecl key(unsigned char,int,int)" (?key@@YAXEHH@Z)
+Texture.obj : error LNK2001: simbolo esterno __imp_glutGet non risolto
+main.obj : error LNK2019: riferimento al simbolo esterno __imp___glutInitWithExit non risolto nella funzione glutInit_ATEXIT_HACK
+main.obj : error LNK2019: riferimento al simbolo esterno __imp___glutCreateWindowWithExit non risolto nella funzione glutCreateWindow_ATEXIT_HACK
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutLeaveMainLoop non risolto nella funzione "void __cdecl key(unsigned char,int,int)" (?key@@YAXEHH@Z)
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutSetOption non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutInitContextVersion non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutInitContextFlags non risolto nella funzione main
+main.obj : error LNK2019: riferimento al simbolo esterno __imp_glutInitContextProfile non risolto nella funzione main
+E:\VisualStudio\GabrieleCalarota_PROGETTO1\freeglut\lib\x86\freeglut.lib : warning LNK4272: il tipo 'x86' del computer della libreria è in conflitto con il tipo 'x64' del computer di destinazione
+E:\VisualStudio\GabrieleCalarota_PROGETTO1\bin\IG1AppDebug.exe : fatal error LNK1120: 19 esterni non risolti

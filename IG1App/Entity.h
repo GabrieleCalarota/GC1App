@@ -338,6 +338,7 @@ public:
 	virtual void update(GLuint);
 protected:
 	GLdouble radius, m, n;
+	Material* mat;
 };
 //-------------------------------------------------------------------------
 

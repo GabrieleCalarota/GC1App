@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
   camera1.set2D();
   camera2.set2D();
   scene1.init();
-  scene1.practica2();
+  scene1.practica2_20();
   scene2.init();
   scene2.practica2_14();
   //scene.aspaNoria(12);
@@ -311,6 +311,14 @@ void key(unsigned char key, int x, int y)
 	  if (twoPorts) {
 		  camera2.yaw(1);
 	  }
+	  break;
+  case 'm':
+	  glEnable(GL_LIGHTING); {
+		  GLfloat luz[] = { 0.5, 0.5, 0.5, 1.0 };
+		  glLightfv(GL_LIGHT0, GL_AMBIENT, luz); }
+	  break;
+  case 'n':
+	  glDisable(GL_LIGHTING);
 	  break;
   case 'o':
 	camera1.set2D();

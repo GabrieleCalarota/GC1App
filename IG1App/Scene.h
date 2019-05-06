@@ -26,6 +26,7 @@ public:
 	void practica2_14();
 	void scene3D();
 	void aspaNoria(int);
+	void practica2_20();
 	//virtual void render(Camera const& cam) ;
 	//void render(glm::dmat4 const&);
 	//void update();		  //update objects of the scene

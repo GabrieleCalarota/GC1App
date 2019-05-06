@@ -12,6 +12,18 @@ void Scene::init()
   glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
   glEnable(GL_DEPTH_TEST);  // enable Depth test 
   glEnable(GL_TEXTURE_2D);
+  glEnable(GL_LIGHTING);
+  glEnable(GL_COLOR_MATERIAL);
+  glEnable(GL_NORMALIZE);
+
+  GLfloat difusa[] = { 1.0, 1.0, 1.0, 1.0 };
+  GLfloat ambiente[] = { 0.2, 0.2, 0.2, 1.0 };
+  GLfloat especular[] = { 0.5, 0.5, 0.5, 1.0};
+  GLfloat dir[] = { -1.0, -1.0, 0.0, 1.0 };
+  glLightfv(GL_LIGHT1, GL_POSITION, dir);
+  glLightfv(GL_LIGHT1, GL_AMBIENT, ambiente);
+  glLightfv(GL_LIGHT1, GL_DIFFUSE, difusa);
+  glLightfv(GL_LIGHT1, GL_SPECULAR, especular);
 
   //Call scene2D as init Scene
   //aspaNoria(12);
@@ -126,6 +138,14 @@ void Scene::aspaNoria(int n)
 	grObjects.push_back(new Tablero(100.0, -1,n));
 	//tablero2
 	grObjects.push_back(new Tablero(100.0,1,n));
+}
+void Scene::practica2_20()
+{
+	grObjects.clear();
+	//Ejes
+	grObjects.push_back(new EjesRGB(400.0));
+	//Esfera
+	grObjects.push_back(new Esfera(200.0, 80, 30));
 }
 //-------------------------------------------------------------------------
 

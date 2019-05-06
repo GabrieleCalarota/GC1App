@@ -956,11 +956,11 @@ void Drone::update()
 	dmat4 t1 = translate(dmat4(1), glm::dvec3(separation*sin(radians(incrAng))*cos(radians(radiant)),
 		separation*cos(radians(incrAng)), separation*sin(radians(incrAng))*sin(radians(radiant))));
 
-	dmat4 auxMatChasis = modelMat;
-	dmat4 auxMatDrone1 = modelMat;
-	dmat4 auxMatDrone2 = modelMat;
-	dmat4 auxMatDrone3 = modelMat;
-	dmat4 auxMatDrone4 = modelMat;
+	dmat4 auxMatChasis = dmat4(1);
+	dmat4 auxMatDrone1 = dmat4(1);
+	dmat4 auxMatDrone2 = dmat4(1);
+	dmat4 auxMatDrone3 = dmat4(1);
+	dmat4 auxMatDrone4 = dmat4(1);
 	chasis->setModelMat(auxMatChasis*t1*r1);
 	//translate drone
 	dmat4 rot = rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
@@ -1002,11 +1002,11 @@ void Drone::update(GLuint u)
 	dmat4 t1 = translate(dmat4(1), glm::dvec3(separation*sin(radians(incrAng))*cos(radians(radiant)),
 		separation*cos(radians(incrAng)), separation*sin(radians(incrAng))*sin(radians(radiant))));
 
-	dmat4 auxMatChasis = modelMat;
-	dmat4 auxMatDrone1 = modelMat;
-	dmat4 auxMatDrone2 = modelMat;
-	dmat4 auxMatDrone3 = modelMat;
-	dmat4 auxMatDrone4 = modelMat;
+	dmat4 auxMatChasis = dmat4(1);
+	dmat4 auxMatDrone1 = dmat4(1);
+	dmat4 auxMatDrone2 = dmat4(1);
+	dmat4 auxMatDrone3 = dmat4(1);
+	dmat4 auxMatDrone4 = dmat4(1);
 	chasis->setModelMat(auxMatChasis*t1*r1);
 	//translate drone
 	dmat4 rot = rotate(dmat4(1), radians(90.0), dvec3(1.0, 0.0, 0.0));
@@ -1090,7 +1090,7 @@ void Esfera::render(Camera const & cam)
 {
 	uploadMvM(cam.getViewMat());
 	glPushMatrix();
-	glColor3f(0.0, 0.0, 1.0);
+	glColor3f(0.8, 0.4, 0.2);
 	glRotatef(90.0, 1.0, 0.0, 0.0);
 	gluQuadricDrawStyle(q, GLU_LINE);
 	gluSphere(q, radius, 50, 50);
@@ -1101,8 +1101,13 @@ void Esfera::render(glm::dmat4 const & modelViewMat)
 {
 	if (mesh != nullptr) {
 		uploadMvM(modelViewMat);
-		glColor3f(0.0, 0.0, 1.0);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//GLfloat luz[] = { 0.5, 0.5, 0.5, 1.0 };
+		//glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
+		//glLightfv(GL_LIGHT0, GL_AMBIENT, luz);
+		glColor3f(0.8, 0.4, 0.2);
+		//glDisable(GL_LIGHT0);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mesh->render();
 	}
 	/*glPushMatrix();
@@ -1225,19 +1230,22 @@ SuperDrone::SuperDrone(Chasis * c0, Chasis * c1, Rotor * r0, Rotor * r)
 	Drone* d1 = new Drone(c1, r, 0.0);
 	d1->setModelMat(translate(dmat4(1), t1));
 	grObjects.push_back(d1);
-	Chasis* c2 = new Chasis(c0->getLado(), c0->getHeight(), 0.0);
+	Chasis* c2 = new Chasis(c1->getLado(), c1->getHeight(), 0.0);
 	dvec3 t2 = c0->getLeftTopCorner();
 	t2[1] += 4.0 + 2.0 + offset;
-	c2->setModelMat(translate(dmat4(1), t2));
-	grObjects.push_back(new Drone(c2, r, 0.0));
-	Chasis* c3 = new Chasis(c0->getLado(), c0->getHeight(), 0.0);
+	Drone* d2 = new Drone(c2, r, 0.0);
+	d2->setModelMat(translate(dmat4(1), t2));
+	grObjects.push_back(d2);
+	Chasis* c3 = new Chasis(c1->getLado(), c1->getHeight(), 0.0);
 	dvec3 t3 = c0->getRightTopCorner();
 	t3[1] += 4.0 + 2.0 + offset;
-	c3->setModelMat(translate(dmat4(1), t3));
-	grObjects.push_back(new Drone(c3, r, 0.0));
-	Chasis* c4 = new Chasis(c0->getLado(), c0->getHeight(), 0.0);
+	Drone* d3 = new Drone(c3, r, 0.0);
+	d3->setModelMat(translate(dmat4(1), t3));
+	grObjects.push_back(d3);
+	Chasis* c4 = new Chasis(c1->getLado(), c1->getHeight(), 0.0);
 	dvec3 t4 = c0->getRightBottomCorner();
 	t4[1] += 4.0 + 2.0 + offset;
-	c4->setModelMat(translate(dmat4(1), t4));
-	grObjects.push_back(new Drone(c4, r, 0.0));
+	Drone* d4 = new Drone(c4, r, 0.0);
+	d4->setModelMat(translate(dmat4(1), t4));
+	grObjects.push_back(d4);
 }

@@ -1,6 +1,8 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: la directory intermedia (Debug\) contiene file condivisi da un altro progetto (IG2App.vcxproj). Tale condizione può comportare un comportamento di pulizia e ricompilazione non corretto.
   Entity.cpp
-e:\visualstudio\gabrielecalarota_progetto2\practica2\ig1app\entity.cpp(1191): warning C4244: 'argomento': conversione da 'T' a 'GLfloat'. Possibile perdita di dati.
+e:\visualstudio\gabrielecalarota_progetto2\practica2\ig1app\entity.cpp(1093): warning C4305: 'argomento': troncamento da 'double' a 'GLfloat'
+e:\visualstudio\gabrielecalarota_progetto2\practica2\ig1app\entity.cpp(1108): warning C4305: 'argomento': troncamento da 'double' a 'GLfloat'
+e:\visualstudio\gabrielecalarota_progetto2\practica2\ig1app\entity.cpp(1196): warning C4244: 'argomento': conversione da 'T' a 'GLfloat'. Possibile perdita di dati.
           with
           [
               T=glm::f64

@@ -447,5 +447,9 @@ void MBR::render()
 				}
 			}
 		}
+		glDisableClientState(GL_NORMAL_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
 	}
+	
+	
 }

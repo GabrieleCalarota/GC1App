@@ -865,6 +865,12 @@ Drone::Drone(Chasis* chasis, Rotor* d, GLdouble R)
 	rightTop[1] += d4->getH() + 1.0;
 	dmat4 t04 = translate(chasis->getModelMat(), rightTop);
 	d4->setModelMat(auxMatDrone4*t04*rot);
+
+	//FOCO
+	foco = new SpotLight(chasis->getLeftBottomCorner());
+	foco->setDiff(fvec4(1.0, 1.0, 1.0, 1.0));
+	foco->setSpec(fvec4(0.5, 0.5, 0.5, 1.0));
+	foco->setSpot(fvec3(0, -1, 0), 45.0, 0);
 }
 
 
@@ -878,7 +884,14 @@ Drone::Drone(Chasis* chasis, Rotor* d, GLdouble R)
 	d4->render(cam);
 }*/
 
-
+void Drone::render(glm::dmat4 const & modelViewMat) {
+	if (foco != nullptr) {
+		dmat4 rot = rotate(dmat4(1), radians(180.0), dvec3(cos(radians(radiant - 90.0)), 0.0, sin(radians(radiant - 90.0))));
+		//foco->upload(((Chasis*)getEntity(0))->getModelMat());
+		foco->upload(((Chasis*)getEntity(0))->getModelMat());
+	}
+	CompoundEntity::render(modelViewMat);
+}
 
 
 
@@ -1077,6 +1090,9 @@ Esfera::Esfera(GLdouble r, int m, int n)
 	}
 	perfil[m - 1] = dvec3(0, r, 0.0);
 	this->mesh = new MBR(m, n, perfil);
+	material = new Material();
+	material->setGold();
+	material->upload();
 }
 
 /*Esfera::~Esfera()
@@ -1088,13 +1104,13 @@ Esfera::Esfera(GLdouble r, int m, int n)
 
 void Esfera::render(Camera const & cam)
 {
-	uploadMvM(cam.getViewMat());
+	/*uploadMvM(cam.getViewMat());
 	glPushMatrix();
 	glColor3f(0.8, 0.4, 0.2);
 	glRotatef(90.0, 1.0, 0.0, 0.0);
 	gluQuadricDrawStyle(q, GLU_LINE);
 	gluSphere(q, radius, 50, 50);
-	glPopMatrix();
+	glPopMatrix();*/
 }
 
 void Esfera::render(glm::dmat4 const & modelViewMat)
@@ -1103,9 +1119,10 @@ void Esfera::render(glm::dmat4 const & modelViewMat)
 		uploadMvM(modelViewMat);
 		//GLfloat luz[] = { 0.5, 0.5, 0.5, 1.0 };
 		//glEnable(GL_COLOR_MATERIAL);
-		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
 		//glLightfv(GL_LIGHT0, GL_AMBIENT, luz);
-		glColor3f(0.8, 0.4, 0.2);
+		//if (color != fvec3(-1.0, -1.0, -1.0)) glColor3f((GLfloat) value_ptr(color));
+		//else 
+		//glColor3f(0.8, 0.4, 0.2);
 		//glDisable(GL_LIGHT0);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		mesh->render();

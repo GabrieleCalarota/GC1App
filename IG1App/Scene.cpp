@@ -2,10 +2,12 @@
 
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
+#include "Light.h"
 
 using namespace glm;
 
 //-------------------------------------------------------------------------
+
 
 void Scene::init()
 { // OpenGL basic setting
@@ -13,17 +15,41 @@ void Scene::init()
   glEnable(GL_DEPTH_TEST);  // enable Depth test 
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_LIGHTING);
-  glEnable(GL_COLOR_MATERIAL);
+  //glEnable(GL_LIGHT0);
+  //glEnable(GL_LIGHT1);
+  //glEnable(GL_COLOR_MATERIAL);
+  //glShadeModel(GL_SMOOTH);
+  //glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
   glEnable(GL_NORMALIZE);
+  
 
-  GLfloat difusa[] = { 1.0, 1.0, 1.0, 1.0 };
-  GLfloat ambiente[] = { 0.2, 0.2, 0.2, 1.0 };
-  GLfloat especular[] = { 0.5, 0.5, 0.5, 1.0};
-  GLfloat dir[] = { -1.0, -1.0, 0.0, 1.0 };
+  GLfloat ambientColor[] = { 0.5, 0.5,0.5, 1.0 }; //Color (0.2, 0.2, 0.2)
+  //glLightfv(GL_LIGHT0, GL_AMBIENT, ambientColor);
+  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+  
+  fixed = new DirLight();
+  fixed->setPosDir(fvec3(1, 1, 0));
+  fixed->setAmb(fvec4(0.2, 0.2, 0.2,1.0));
+  fixed->setSpec(fvec4(0.5, 0.5, 0.5,1.0));
+  fixed->setDiff(fvec4(1.0, 1.0, 1.0,1.0));
+
+  minero = new SpotLight(fvec3(1,1,1));
+  //minero->setAmb(fvec4(0.1, 0.5, 0.5, 1));
+  minero->setDiff(fvec4(0.4, 0.8, 0.0, 1.0));
+  minero->setSpec(fvec4(0.5, 0.5, 0.5, 1.0));
+  minero->setSpot(fvec3(0, 0, -1), 10.0, 0);
+  //)
+ 
+  /*GLfloat dir[] = { -1, -1, 0, 0 };
+  GLfloat amb[] = { 0.2, 0.2, 0.2, 1.0 };
+  GLfloat especular[] = { 1,1, 1, 1.0 };
+  GLfloat diffuse[] = { 0.5, 0.5, 0.5, 1.0 };
   glLightfv(GL_LIGHT1, GL_POSITION, dir);
-  glLightfv(GL_LIGHT1, GL_AMBIENT, ambiente);
-  glLightfv(GL_LIGHT1, GL_DIFFUSE, difusa);
-  glLightfv(GL_LIGHT1, GL_SPECULAR, especular);
+  //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, dir);
+  glLightfv(GL_LIGHT1, GL_AMBIENT, amb);
+  glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
+  glLightfv(GL_LIGHT1, GL_SPECULAR, especular);*/
+
 
   //Call scene2D as init Scene
   //aspaNoria(12);
@@ -139,13 +165,71 @@ void Scene::aspaNoria(int n)
 	//tablero2
 	grObjects.push_back(new Tablero(100.0,1,n));
 }
+void Scene::practica2_18()
+{
+}
+void Scene::practica2_19()
+{
+}
 void Scene::practica2_20()
 {
 	grObjects.clear();
 	//Ejes
 	grObjects.push_back(new EjesRGB(400.0));
+	//Dron
+	//grObjects.push_back(new Drone(new Chasis(50.0, 5.0, 200.0 + 5.0), new Rotor(5.0, 5.0, 2.0, dvec3(0.0, 0.0, 0.0)), 200.0 + 5.0));
 	//Esfera
 	grObjects.push_back(new Esfera(200.0, 80, 30));
+
+}
+void Scene::practica2_21()
+{
+}
+void Scene::practica2_22()
+{
+	grObjects.clear();
+	apaga_todo = true;
+	//Ejes
+	grObjects.push_back(new EjesRGB(400.0));
+	//Dron
+	grObjects.push_back(new Drone(new Chasis(50.0, 5.0, 200.0 + 5.0), new Rotor(5.0, 5.0, 2.0, dvec3(0.0, 0.0, 0.0)), 200.0 + 5.0));
+	//Esfera
+	grObjects.push_back(new Esfera(200.0, 80, 30));
+	setLuzGlobal(0.0, 0.0, 0.0, 1.0);
+}
+void Scene::setLuzGlobal(GLfloat a, GLfloat b, GLfloat c , GLfloat d)
+{
+	GLfloat ambient[] = { a,b,c,d };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
+	if (a == 0.0){
+		if (fixed != nullptr)
+			fixed->disable();
+		if (minero != nullptr && apaga_todo)
+			minero->disable();
+	}
+	else {
+		if (fixed != nullptr)
+			fixed->enable();
+		if (minero != nullptr && apaga_todo)
+			minero->enable();
+	}
+}
+void Scene::setColorDrone(bool a)
+{
+	if (apaga_todo) {
+		if (a) {
+			glEnable(GL_COLOR_MATERIAL);
+			glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+			if (fixed != nullptr)
+				fixed->enable();
+		}
+		else {
+			glDisable(GL_COLOR_MATERIAL);
+			if (fixed != nullptr) {
+				fixed->disable();
+			}
+		}
+	}
 }
 //-------------------------------------------------------------------------
 
@@ -166,16 +250,18 @@ void Scene::practica2_20()
 		el->render(cam);
 	}
 }
-//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------*/
 
 void Scene::render(glm::dmat4 const& modelMat)
 {
-	for (Entity* el : grObjects)
-	{
-		el->render(modelMat);
-	}
+	if (fixed != nullptr)
+		fixed->upload(modelMat);
+	if (minero != nullptr)
+		minero->upload(dmat4(1.0));
+	CompoundEntity::render(modelMat);
 }
-//-------------------------------------------------------------------------
+
+/*//-------------------------------------------------------------------------
 void Scene::update()
 {
 	for (Entity* el : grObjects)

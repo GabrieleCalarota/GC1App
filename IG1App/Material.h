@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
 #define _USE_MATH_DEFINES
-#include "Entity.h"
 #include <GL/freeglut.h>
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
 #include <math.h>
+
 class Material {
 protected:
 	// Coeficientes de reflexión

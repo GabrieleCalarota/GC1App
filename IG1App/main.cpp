@@ -31,11 +31,14 @@ Scene scene2 ;
 bool auto_update;
 bool baldosas = false;
 bool twoPorts = false;
+bool coloDrone = false;
 GLuint last_update_tick;
 
 //Coordenadas del mouse y keyboard
 glm::dvec2 mCoord;
 int mBot = 0;
+
+//GLfloat luz[] = {0, 0, 0, 1};
 
 //----------- Callbacks ----------------------------------------------------
 
@@ -65,7 +68,7 @@ int main(int argc, char *argv[])
  
   glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS); 
   //glutInitWindowPosition(100, 50);
-  glutInitWindowSize(1600, 600);   // window size
+  glutInitWindowSize(800, 600);   // window size
 
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH /*| GLUT_STENCIL*/); // RGBA colors, double buffer, depth buffer and stencil buffer   
   
@@ -92,9 +95,10 @@ int main(int argc, char *argv[])
   camera1.set2D();
   camera2.set2D();
   scene1.init();
-  scene1.practica2_20();
-  scene2.init();
-  scene2.practica2_14();
+  scene1.practica2_22();
+  //scene2.init();
+  
+  //scene2.practica2_14();
   //scene.aspaNoria(12);
   
   glutMainLoop(); 
@@ -286,6 +290,10 @@ void key(unsigned char key, int x, int y)
   case '-':
     camera1.uploadScale(-0.01);   // zoom out (decreases the scale)
     break;
+  case 'b':
+	  coloDrone = !coloDrone;
+	  scene1.setColorDrone(coloDrone);
+	  break;
   case 'l':
 	camera1.set3D(); 
 	break;
@@ -313,12 +321,12 @@ void key(unsigned char key, int x, int y)
 	  }
 	  break;
   case 'm':
-	  glEnable(GL_LIGHTING); {
-		  GLfloat luz[] = { 0.5, 0.5, 0.5, 1.0 };
-		  glLightfv(GL_LIGHT0, GL_AMBIENT, luz); }
+	  //glEnable(GL_LIGHTING); 
+	  scene1.setLuzGlobal(0.5, 0.5, 0.5, 1);
 	  break;
   case 'n':
-	  glDisable(GL_LIGHTING);
+	  //glDisable(GL_LIGHTING);
+	  scene1.setLuzGlobal(0, 0, 0, 1);
 	  break;
   case 'o':
 	camera1.set2D();

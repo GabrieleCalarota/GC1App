@@ -71,7 +71,7 @@ protected:
 
 
 	GLdouble radio = 1000.0, ang = 0.0;
-	bool orto = true;
+	bool orto = false;
 	
 	Viewport* vp;
 	void setAxes();

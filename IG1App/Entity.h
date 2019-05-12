@@ -5,11 +5,14 @@
 #include <GL/freeglut.h>
 #include <glm.hpp>
 #include <vector>
+#include <gtc/type_ptr.hpp>
 
 #include "Camera.h"
 #include "Mesh.h"
 #include "Texture.h"
 #include "CompoundEntity.h"
+#include "Material.h"
+#include "Light.h"
 
 //-------------------------------------------------------------------------
 
@@ -18,7 +21,7 @@ class Entity
 public:
 	Entity() : modelMat(1.0) { }; 
 	virtual ~Entity() { };
-
+ 
 	virtual void render(Camera const& cam) = 0;
 	virtual void render(glm::dmat4 const & modelViewMat) = 0;
 	virtual void update() = 0;
@@ -35,7 +38,8 @@ protected:
 	glm::dmat4 modelMat;    // modeling matrix
 	double incrAng = 0;		 // angle incremental for updates
 	Texture texture;		// texture variable
-
+	//glm::fvec3 color;
+	
 	// transfers modelViewMat to the GPU
 	virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
 };
@@ -306,7 +310,7 @@ public:
 	Drone(Chasis* c, Rotor* d, GLdouble);
 	//~Drone();
 	//virtual void render(Camera const& cam);
-	//virtual void render(glm::dmat4 const& modelViewMat);
+	virtual void render(glm::dmat4 const& modelViewMat);
 	virtual void update();
 	virtual void update(GLuint);
 	void move(bool);
@@ -316,6 +320,7 @@ protected:
 	//Rotor* d1,* d2,* d3, *d4;
 	GLdouble separation;
 	GLdouble radiant = 45.0;
+	SpotLight *foco;
 };
 class SuperDrone : public CompoundEntity
 {
@@ -338,9 +343,18 @@ public:
 	virtual void update(GLuint);
 protected:
 	GLdouble radius, m, n;
-	Material* mat;
+	Material* material;
 };
 //-------------------------------------------------------------------------
-
+class EntityMaterial : public Entity {
+public:
+	EntityMaterial() : Entity() { };
+	virtual ~EntityMaterial() { };
+	void setTexture(Texture* tex) { texture = tex; };
+	void setMaterial(Material matl) { material = matl; };
+protected:
+	Texture* texture = nullptr;
+	Material material;
+};
 //-------------------------------------------------------------------------
 #endif //_H_Entities_H_

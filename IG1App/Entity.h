@@ -10,7 +10,6 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "Texture.h"
-#include "CompoundEntity.h"
 #include "Material.h"
 #include "Light.h"
 
@@ -212,6 +211,7 @@ public:
 	virtual void update(GLuint);
 };
 //-------------------------------------------------------------------------
+
 class Rectangulo : public Entity {
 public:
 	Rectangulo(GLdouble h, GLdouble w);
@@ -226,6 +226,8 @@ public:
 protected:
 	GLdouble height, width;
 };
+//-------------------------------------------------------------------------
+
 class QuadricEntity : public Entity
 {
 public:
@@ -234,6 +236,8 @@ public:
 protected:
 	GLUquadricObj* q;
 };
+//-------------------------------------------------------------------------
+
 class Cilindro : public QuadricEntity {
 public:
 	Cilindro(GLdouble tr, GLdouble br, GLdouble h, glm::dvec3 color);
@@ -249,6 +253,7 @@ protected:
 	GLdouble baseR, topR, height;
 	glm::dvec3 color_out;
 };
+//-------------------------------------------------------------------------
 
 class CompoundEntity : public Entity
 {
@@ -266,6 +271,7 @@ protected:
 	std::vector<Entity *> grObjects;
 	glm::dmat4 modelMat;
 };
+//-------------------------------------------------------------------------
 
 class Rotor : public CompoundEntity
 {
@@ -275,16 +281,14 @@ public:
 	GLdouble getR();
 	GLdouble getH();
 	virtual void render(Camera const& cam);
-	//virtual void render(glm::dmat4 const& modelViewMat);
 	virtual void update();
 	void update(bool b);
 	virtual void update(GLuint);
 protected:
-	//GLUquadricObj* q;
-	//GLdouble baseR, topR, height;
 	bool horario;
 };
 //-------------------------------------------------------------------------
+
 class Chasis : public Entity
 {
 public:
@@ -304,48 +308,45 @@ protected:
 	GLdouble lado, height;
 };
 //-------------------------------------------------------------------------
+
 class Drone : public CompoundEntity
 {
 public:
 	Drone(Chasis* c, Rotor* d, GLdouble);
-	//~Drone();
-	//virtual void render(Camera const& cam);
 	virtual void render(glm::dmat4 const& modelViewMat);
 	virtual void update();
 	virtual void update(GLuint);
 	void move(bool);
 	void moveRight(bool);
 protected:
-	//Chasis* chasis;
-	//Rotor* d1,* d2,* d3, *d4;
 	GLdouble separation;
 	GLdouble radiant = 45.0;
 	SpotLight *foco;
 };
+//-------------------------------------------------------------------------
+
 class SuperDrone : public CompoundEntity
 {
 public:
 	SuperDrone(Chasis* c0, Chasis* c1, Rotor* r0, Rotor* r1);
-	//virtual void update();
-	//virtual void update(GLuint);
 };
 //-------------------------------------------------------------------------
 
 class Esfera : public QuadricEntity
 {
 public:
-	Esfera(GLdouble r);
 	Esfera(GLdouble r, int m, int n);
-	//~Esfera();
 	virtual void render(Camera const& cam);
 	virtual void render(glm::dmat4 const& modelViewMat);
 	virtual void update();
 	virtual void update(GLuint);
+	void setMaterial(Material *);
 protected:
 	GLdouble radius, m, n;
 	Material* material;
 };
 //-------------------------------------------------------------------------
+
 class EntityMaterial : public Entity {
 public:
 	EntityMaterial() : Entity() { };
@@ -357,4 +358,6 @@ protected:
 	Material material;
 };
 //-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
 #endif //_H_Entities_H_

@@ -48,6 +48,7 @@ protected:
 	glm::dvec4* colors = nullptr;    // color array
 	glm::dvec2* texturas = nullptr;	 // texturas array
 };
+//-------------------------------------------------------------------------
 
 class MBR : public Mesh {
 public:
@@ -62,6 +63,7 @@ protected:
 	glm::dvec3* normals = nullptr;
 };
 
+//-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
 #endif //_H_Scene_H_

@@ -15,16 +15,10 @@ void Scene::init()
   glEnable(GL_DEPTH_TEST);  // enable Depth test 
   glEnable(GL_TEXTURE_2D);
   glEnable(GL_LIGHTING);
-  //glEnable(GL_LIGHT0);
-  //glEnable(GL_LIGHT1);
-  //glEnable(GL_COLOR_MATERIAL);
-  //glShadeModel(GL_SMOOTH);
-  //glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
   glEnable(GL_NORMALIZE);
   
 
-  GLfloat ambientColor[] = { 0.5, 0.5,0.5, 1.0 }; //Color (0.2, 0.2, 0.2)
-  //glLightfv(GL_LIGHT0, GL_AMBIENT, ambientColor);
+  GLfloat ambientColor[] = { 0.5, 0.5,0.5, 1.0 }; 
   glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
   
   fixed = new DirLight();
@@ -33,28 +27,15 @@ void Scene::init()
   fixed->setSpec(fvec4(0.5, 0.5, 0.5,1.0));
   fixed->setDiff(fvec4(1.0, 1.0, 1.0,1.0));
 
-  minero = new SpotLight(fvec3(1,1,1));
-  //minero->setAmb(fvec4(0.1, 0.5, 0.5, 1));
+  minero = new SpotLight(fvec3(0,0,-1));
+  minero->setAmb(fvec4(0, 0, 0, 1));
   minero->setDiff(fvec4(0.4, 0.8, 0.0, 1.0));
   minero->setSpec(fvec4(0.5, 0.5, 0.5, 1.0));
   minero->setSpot(fvec3(0, 0, -1), 10.0, 0);
-  //)
- 
-  /*GLfloat dir[] = { -1, -1, 0, 0 };
-  GLfloat amb[] = { 0.2, 0.2, 0.2, 1.0 };
-  GLfloat especular[] = { 1,1, 1, 1.0 };
-  GLfloat diffuse[] = { 0.5, 0.5, 0.5, 1.0 };
-  glLightfv(GL_LIGHT1, GL_POSITION, dir);
-  //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, dir);
-  glLightfv(GL_LIGHT1, GL_AMBIENT, amb);
-  glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
-  glLightfv(GL_LIGHT1, GL_SPECULAR, especular);*/
 
-
-  //Call scene2D as init Scene
-  //aspaNoria(12);
-  //practica2();
 }
+//-------------------------------------------------------------------------
+
 void Scene::scene2D()
 {
 	//clear Scene
@@ -69,74 +50,46 @@ void Scene::scene2D()
 	grObjects.push_back(new RectanguloRGB(50.0,200.0));
 
 }
+//-------------------------------------------------------------------------
+
 void Scene::moveUp(bool up)
 {
 	//MOVE DRONE ARRIBA Y ABAJO
 	Drone* drone = (Drone*) grObjects.at(1);
 	drone->move(up);
 }
+//-------------------------------------------------------------------------
+
 void Scene::moveRight(bool right)
 {
 	//MOVE DRONE ARRIBA Y ABAJO
 	Drone* drone = (Drone*)grObjects.at(1);
 	drone->moveRight(right);
 }
+//-------------------------------------------------------------------------
+
 void Scene::practica2()
 {
 	//clear Scene
 	grObjects.clear();
 	//Ejes
 	grObjects.push_back(new EjesRGB(400.0));
-	//ROTOR
-	//grObjects.push_back(new Rotor(100.0, 100.0, 50.0, dvec3(1.0, 0.0, 0.0), 200.0 + 5.0));
-	//CHASIS
-	//grObjects.push_back(new Chasis(100.0, 25.0));
 	//DRONE
 	grObjects.push_back(new Drone(new Chasis(50.0, 5.0, 200.0+5.0), new Rotor(5.0, 5.0, 2.0,dvec3(0.0,0.0,0.0)), 200.0+5.0) );
 	//ESFERA
 	grObjects.push_back(new Esfera(200.0, 80, 30));
 }
+//-------------------------------------------------------------------------
+
 void Scene::practica2_14() {
 	//clear Scene
 	grObjects.clear();
 	//Ejes
 	grObjects.push_back(new EjesRGB(400.0));
-	/*//ROTOR
-	//grObjects.push_back(new Rotor(100.0, 100.0, 50.0, dvec3(1.0,0.0,0.0)));
-	//CHASIS
-	//grObjects.push_back(new Chasis(100.0, 25.0));
-	//DRONE
-	Chasis* c0 = new Chasis(100.0, 10.0, 0.0);
-	grObjects.push_back(new Drone(c0, new Rotor(10.0, 10.0, 4.0, dvec3(0.0, 0.0, 0.0)), 0.0));
-	Chasis* c1 = new Chasis(15.0, 2.0, 0.0);
-	Rotor* r = new Rotor(3.0, 3.0, 1.0, dvec3(0.0, 0.0, 0.0));
-	dvec3 t1 = c0->getLeftBottomCorner();
-	//rotor height
-	GLdouble offset = 5.0;
-	t1[1] += 4.0+2.0+offset;
-	c1->setModelMat(translate(dmat4(1),t1));
-	grObjects.push_back(new Drone(c1, r, 0.0));
-	Chasis* c2 = new Chasis(15.0, 2.0, 0.0);
-	dvec3 t2 = c0->getLeftTopCorner();
-	t2[1] += 4.0+2.0 + offset;
-	c2->setModelMat(translate(dmat4(1), t2));
-	grObjects.push_back(new Drone(c2, r, 0.0));
-	Chasis* c3 = new Chasis(15.0, 2.0, 0.0);
-	dvec3 t3 = c0->getRightTopCorner();
-	t3[1] += 4.0+2.0 + offset;
-	c3->setModelMat(translate(dmat4(1), t3));
-	grObjects.push_back(new Drone(c3, r, 0.0));
-	Chasis* c4 = new Chasis(15.0, 2.0, 0.0);
-	dvec3 t4 = c0->getRightBottomCorner();
-	t4[1] += 4.0+2.0 + offset;
-	c4->setModelMat(translate(dmat4(1), t4));
-	grObjects.push_back(new Drone(c4, r, 0.0));*/
 	grObjects.push_back(new SuperDrone(new Chasis(100.0, 10.0, 0.0), new Chasis(15.0, 2.0, 0.0), new Rotor(10.0, 10.0, 4.0, dvec3(0.0, 0.0, 0.0)), new Rotor(3.0, 3.0, 1.0, dvec3(0.0, 0.0, 0.0))));
-	
-
-	//ESFERA
-	//grObjects.push_back(new Esfera(200.0, 80, 30));
 }
+//-------------------------------------------------------------------------
+
 void Scene::scene3D()
 {
 	//clear Scene
@@ -152,6 +105,7 @@ void Scene::scene3D()
 
 }
 //-------------------------------------------------------------------------
+
 void Scene::aspaNoria(int n)
 {
 	//clear Scene
@@ -165,92 +119,127 @@ void Scene::aspaNoria(int n)
 	//tablero2
 	grObjects.push_back(new Tablero(100.0,1,n));
 }
+//-------------------------------------------------------------------------
+
 void Scene::practica2_18()
 {
+	apartado_18 = true;
+	practica2_19();
+	apartado_19 = false;
 }
+//-------------------------------------------------------------------------
+
 void Scene::practica2_19()
 {
-}
-void Scene::practica2_20()
-{
+	glEnable(GL_COLOR_MATERIAL);
+	apartado_19 = true;
+	minero->disable();
 	grObjects.clear();
 	//Ejes
 	grObjects.push_back(new EjesRGB(400.0));
-	//Dron
-	//grObjects.push_back(new Drone(new Chasis(50.0, 5.0, 200.0 + 5.0), new Rotor(5.0, 5.0, 2.0, dvec3(0.0, 0.0, 0.0)), 200.0 + 5.0));
+	//Esfera
+	Esfera *e = new Esfera(200.0, 50, 50);
+	grObjects.push_back(e);
+	e->setMaterial(nullptr);
+}
+//-------------------------------------------------------------------------
+
+void Scene::practica2_20()
+{
+	apartado_20 = true;
+	glDisable(GL_COLOR_MATERIAL);
+	minero->disable();
+	grObjects.clear();
+	//Ejes
+	grObjects.push_back(new EjesRGB(400.0));
 	//Esfera
 	grObjects.push_back(new Esfera(200.0, 80, 30));
-
 }
+//-------------------------------------------------------------------------
+
 void Scene::practica2_21()
 {
+	apartado_21 = true;
+	glDisable(GL_COLOR_MATERIAL);
+	grObjects.clear();
+	//Ejes
+	grObjects.push_back(new EjesRGB(400.0));
+	//Esfera
+	grObjects.push_back(new Esfera(200.0, 80, 30));
 }
+//-------------------------------------------------------------------------
+
 void Scene::practica2_22()
 {
 	grObjects.clear();
-	apaga_todo = true;
+	apartado_22 = true;
 	//Ejes
 	grObjects.push_back(new EjesRGB(400.0));
 	//Dron
 	grObjects.push_back(new Drone(new Chasis(50.0, 5.0, 200.0 + 5.0), new Rotor(5.0, 5.0, 2.0, dvec3(0.0, 0.0, 0.0)), 200.0 + 5.0));
 	//Esfera
-	grObjects.push_back(new Esfera(200.0, 80, 30));
+	grObjects.push_back(new Esfera(200.0, 50, 50));
 	setLuzGlobal(0.0, 0.0, 0.0, 1.0);
 }
+//-------------------------------------------------------------------------
+
 void Scene::setLuzGlobal(GLfloat a, GLfloat b, GLfloat c , GLfloat d)
 {
 	GLfloat ambient[] = { a,b,c,d };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
 	if (a == 0.0){
+		if (apartado_19) {
+			return;
+		}
 		if (fixed != nullptr)
 			fixed->disable();
-		if (minero != nullptr && apaga_todo)
+		if ( apartado_18 || apartado_20 || apartado_21) {
+			return;
+		}
+		if (minero != nullptr)
 			minero->disable();
 	}
 	else {
+		if (apartado_19) {
+			return;
+		}
 		if (fixed != nullptr)
 			fixed->enable();
-		if (minero != nullptr && apaga_todo)
+		if (apartado_18 || apartado_20 || apartado_21) {
+			return;
+		}
+		if (minero != nullptr)
 			minero->enable();
 	}
 }
+//-------------------------------------------------------------------------
+
 void Scene::setColorDrone(bool a)
 {
-	if (apaga_todo) {
+	if (apartado_22) {
 		if (a) {
 			glEnable(GL_COLOR_MATERIAL);
 			glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+			//((Esfera*)grObjects.at(1))->setMaterial(nullptr);
 			if (fixed != nullptr)
 				fixed->enable();
+			//glEnable(GL_COLOR_MATERIAL);
+			//GLfloat ambient[] = { 0.5,0.5,0.5,1 };
+			//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
 		}
 		else {
 			glDisable(GL_COLOR_MATERIAL);
-			if (fixed != nullptr) {
+			Material *m = new Material();
+			m->setGold();
+			m->upload();
+			((Esfera*)grObjects.at(1))->setMaterial(m);
+			/*if (fixed != nullptr) {
 				fixed->disable();
-			}
+			}*/
 		}
 	}
 }
 //-------------------------------------------------------------------------
-
-/*Scene::~Scene()
-{ // free memory and resources   
-  
-  for (Entity* el: grObjects)
-  {
-	  delete el;  el = nullptr;
-  }
-}*/
-//-------------------------------------------------------------------------
-
-/*void Scene::render(Camera const& cam)
-{
-	for (Entity* el: grObjects)
-	{
-		el->render(cam);
-	}
-}
-//-------------------------------------------------------------------------*/
 
 void Scene::render(glm::dmat4 const& modelMat)
 {
@@ -260,23 +249,27 @@ void Scene::render(glm::dmat4 const& modelMat)
 		minero->upload(dmat4(1.0));
 	CompoundEntity::render(modelMat);
 }
+//-------------------------------------------------------------------------
 
-/*//-------------------------------------------------------------------------
-void Scene::update()
+void Scene::setMaterial(char c)
 {
-	for (Entity* el : grObjects)
-	{
-		el->update();
+	Material *m = new Material();
+	switch (c) {
+	case 'g':
+		m->setGold();
+		break;
+	case 'c':
+		m->setCopper();
+		break;
+	case 's':
+		m->setSilver();
+		break;
+	}
+	m->upload();
+	for (Entity* el : grObjects) {
+		((Esfera*)el)->setMaterial(m);
 	}
 }
 //-------------------------------------------------------------------------
-
-void Scene::update(GLuint delta)
-{
-	for (Entity* el : grObjects)
-	{
-		el->update(delta);
-	}
-}*/
 //-------------------------------------------------------------------------
 

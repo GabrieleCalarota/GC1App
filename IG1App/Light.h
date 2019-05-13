@@ -25,12 +25,14 @@ public:
 	void uploadL();
 	virtual void upload(glm::dmat4 const& modelViewMat) = 0;
 };
+//-------------------------------------------------------------------------
 
 class DirLight : public Light {
 public:
 	virtual void upload(glm::dmat4 const& modelViewMat);
 	void setPosDir(glm::fvec3 dir);
 };
+//-------------------------------------------------------------------------
 
 class PosLight : public Light {
 protected:
@@ -41,6 +43,7 @@ public:
 	void setPosDir(glm::fvec3 dir);
 	void setAtte(GLfloat kc, GLfloat kl, GLfloat k);
 };
+//-------------------------------------------------------------------------
 
 class SpotLight : public PosLight {
 protected:
@@ -56,4 +59,6 @@ public:
 	virtual void upload(glm::dmat4 const& modelViewMat);
 	void setSpot(glm::fvec3 dir, GLfloat cf, GLfloat e);
 };
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 

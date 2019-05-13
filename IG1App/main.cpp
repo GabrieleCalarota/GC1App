@@ -67,7 +67,6 @@ int main(int argc, char *argv[])
   glutInitContextFlags(GLUT_DEBUG);   // GLUT_FORWARD_COMPATIBLE
  
   glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS); 
-  //glutInitWindowPosition(100, 50);
   glutInitWindowSize(800, 600);   // window size
 
   glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH /*| GLUT_STENCIL*/); // RGBA colors, double buffer, depth buffer and stencil buffer   
@@ -95,17 +94,15 @@ int main(int argc, char *argv[])
   camera1.set2D();
   camera2.set2D();
   scene1.init();
-  scene1.practica2_22();
+  scene1.practica2_18();
   //scene2.init();
-  
   //scene2.practica2_14();
-  //scene.aspaNoria(12);
+
+  //scene1.aspaNoria(12);
   
   glutMainLoop(); 
     
-  //cin.ignore(INT_MAX, '\n');  cin.get();  
   glutDestroyWindow(win);  // Destroy the context 
-  //glutDestroyWindow(win2);  // Destroy the context 
  
   return 0;
 }
@@ -115,12 +112,10 @@ void display()   // double buffering
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   
   
-  if (baldosas)
+  if (baldosas) // Se muestran 4 puertos de vista
 	  embaldosar(2);
-  // Se muestran 4 puertos de vista
   else {
 	  twoPortsDisplay();
-	  //scene2.render(camera2.getViewMat());
   }
     
   glutSwapBuffers();  
@@ -162,10 +157,8 @@ void twoPortsDisplay() {
 		scene2.render(camera2.getViewMat());
 	}
 	else {
-		//camera2.~Camera();
 		resize(CLIENT_WIDTH, CLIENT_HEIGHT);
 		scene1.render(camera1.getViewMat());
-		//scene2.~Scene();
 	}
 }
 //-------------------------------------------------------------------------
@@ -204,16 +197,11 @@ void update() {
 		GLuint now = glutGet(GLUT_ELAPSED_TIME);
 		scene1.update(now - last_update_tick);
 		scene2.update(now - last_update_tick);
-		//glutPostRedisplay();
 		if (twoPorts) {
 			scene2.update(now - last_update_tick);
-			//glutPostRedisplay();
 		}
-	
 		last_update_tick = now;
-
 		glutPostRedisplay();
-
 	}
 }
 void mouse(int button, int state, int x, int y)
@@ -223,7 +211,6 @@ void mouse(int button, int state, int x, int y)
 	//prende le coordinate x,y della finestra
 	mBot = button;
 	mCoord = glm::dvec2(x, y);
-	//std::cout << "mouse " << x << ", " << y << endl;
 	//y ha origine in alto a dinistra, mentre nel punto di vista sta in basso
 	//y(viewport) = glutGet(GLUT_WINDOW_HEIGHT)-y;
 }
@@ -231,7 +218,7 @@ void motion(int x, int y)
 {
   //coordinate di dove viene rilasciato il mouse
 	//GLUT_LEFT_BUTTON,GLUT_RIGHT_BUTTON
-	//GLUT_UP/GLUT_DOWN costantes di estado
+	//GLUT_UP/GLUT_DOWN costantes de estados
 	glm::dvec2 mp = mCoord;
 	mCoord = glm::dvec2(x, y);
 
@@ -255,7 +242,6 @@ void motion(int x, int y)
 void mouseWheel(int n, int d, int x, int y)
 {
 	int m = glutGetModifiers();
-	//std::cout << "mouse wheel " << x << ", " << y << endl;
 	Camera *tmp = &camera1;
 	if (twoPorts) {
 		if (x >= (glutGet(GLUT_WINDOW_WIDTH) / 2))
@@ -294,9 +280,15 @@ void key(unsigned char key, int x, int y)
 	  coloDrone = !coloDrone;
 	  scene1.setColorDrone(coloDrone);
 	  break;
+  case 'c':
+	  scene1.setMaterial('c');
+	  break;
   case 'l':
-	camera1.set3D(); 
-	break;
+	  camera1.set3D();
+	  break;
+  case 'g':
+	  scene1.setMaterial('g');
+	  break;
   case 'h':
 	  baldosas = !baldosas;
 	  if (!baldosas) {
@@ -307,12 +299,9 @@ void key(unsigned char key, int x, int y)
 	  twoPorts = !twoPorts;
 	  if (twoPorts) {
 		  glutSetWindowTitle("Gabriele Calarota App - Scene 2");
-		  //glutInitWindowSize(1600, 600);
 	  }
 	  else {
 		  glutSetWindowTitle("Gabriele Calarota App - Scene 1");
-		  //glutInitWindowSize(800, 600);
-		  //resize(CLIENT_WIDTH, CLIENT_HEIGHT);
 	  }
 	  break;
   case 'k':
@@ -321,16 +310,17 @@ void key(unsigned char key, int x, int y)
 	  }
 	  break;
   case 'm':
-	  //glEnable(GL_LIGHTING); 
 	  scene1.setLuzGlobal(0.5, 0.5, 0.5, 1);
 	  break;
   case 'n':
-	  //glDisable(GL_LIGHTING);
 	  scene1.setLuzGlobal(0, 0, 0, 1);
 	  break;
   case 'o':
 	camera1.set2D();
 	break;
+  case 's':
+	  scene1.setMaterial('s');
+	  break;
   case 'u':
 	  scene1.update();
 	  if (twoPorts)

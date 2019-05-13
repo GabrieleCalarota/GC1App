@@ -33,6 +33,7 @@ void Camera::setVP(Viewport * avp)
 {
 	vp = avp;
 }
+//-------------------------------------------------------------------------
 
 void Camera::uploadVM() const
 {
@@ -77,39 +78,53 @@ void Camera::uploadScale(GLdouble s)
 
 	uploadPM();
 }
+//-------------------------------------------------------------------------
+
 void Camera::setCenital()
 {
 	//situando ojo a altura igual a radio, mirando al origen y orientando la camara en la direccion (Z,-Z)
 	//ang a -90
 }
+//-------------------------------------------------------------------------
+
 void Camera::moveLR(GLdouble cs)
 {
 	eye += u * cs;
 	look += u * cs;
 	setVM();
 }
+//-------------------------------------------------------------------------
+
 void Camera::moveFB(GLdouble cs)
 {
 	eye += n * cs;
 	look += n * cs;
 	setVM();
 }
+//-------------------------------------------------------------------------
+
 void Camera::moveUD(GLdouble cs)
 {
 	eye += v * cs;
 	look += v * cs;
 	setVM();
 }
+//-------------------------------------------------------------------------
+
 void Camera::lookLR(GLdouble cs)
 {
 	look += u * cs;
 	setVM();
 }
+//-------------------------------------------------------------------------
+
 void Camera::lookUD(GLdouble cs)
 {
 	look += v * cs;
 	setVM();
 }
+//-------------------------------------------------------------------------
+
 void Camera::orbit(GLdouble ax)
 {
 	ang += ax;
@@ -117,6 +132,8 @@ void Camera::orbit(GLdouble ax)
 	eye.z = look.z - sin(radians(ang)) * radio;
 	setVM();
 }
+//-------------------------------------------------------------------------
+
 void Camera::orbit(GLdouble ax, GLdouble ay)
 {
 	ang += ax;
@@ -125,6 +142,8 @@ void Camera::orbit(GLdouble ax, GLdouble ay)
 	eye.y += ay;
 	setVM();
 }
+//-------------------------------------------------------------------------
+
 void Camera::setAxes()
 {
 	//viewMat = lookAt(eye, look, up);
@@ -132,11 +151,15 @@ void Camera::setAxes()
 	v = glm::row(viewMat, 1);
 	n = glm::row(viewMat, 2);
 }
+//-------------------------------------------------------------------------
+
 void Camera::setVM()
 {
 	viewMat = lookAt(eye, look, up);
 	setAxes();
 }
+//-------------------------------------------------------------------------
+
 void Camera::uploadPM()
 {
 	if (orto) {

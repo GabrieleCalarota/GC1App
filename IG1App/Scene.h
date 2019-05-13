@@ -7,7 +7,6 @@
 
 #include "Camera.h"
 #include "Entity.h"
-#include "CompoundEntity.h"
 #include "Light.h"
 
 #include <vector>
@@ -17,7 +16,6 @@
 class Scene	: public CompoundEntity { 
 public:
     Scene() { };
-	//~Scene();
     void init(); 
 
 	void moveUp(bool up);
@@ -33,20 +31,18 @@ public:
 	void practica2_22();
 	void setLuzGlobal(GLfloat, GLfloat, GLfloat, GLfloat);
 	void setColorDrone(bool);
-	//virtual void render(Camera const& cam) ;
 	void render(glm::dmat4 const&);
-	//void update();		  //update objects of the scene
-	//void update(GLuint);  //autoupdate objects of the scene by parameter GLuint
+	void setMaterial(char);
 protected:
 		
-	  //std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
 	  void scene2D();
 	  DirLight *fixed;
 	  SpotLight *minero;
-	  bool apaga_todo = false;
-	  //GLfloat ambient[];
-	  //GLfloat diffuse[];
-	  //GLfloat especular[];
+	  bool apartado_18 = false;
+	  bool apartado_19 = false;
+	  bool apartado_20 = false;
+	  bool apartado_21 = false;
+	  bool apartado_22 = false;
 };
 
 //-------------------------------------------------------------------------
